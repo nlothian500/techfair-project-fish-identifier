@@ -21,7 +21,7 @@ prices = {
     "Mackerel":  650
 }
 
-inputs = classifier(x, candidate_labels=fish)
+inputs = classifier(x, candidate_labels=fish, hypothesis_template="a photo of a live {}, a marine fish species")
 print("Fish Name:")
 print(inputs[0]["label"])
 lab = inputs[0]["label"]
