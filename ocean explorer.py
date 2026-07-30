@@ -1,12 +1,13 @@
 from PIL import Image
 from transformers import pipeline
 
-x = Image.open("Mackerel.webp")
+x = Image.open("Thunnus.jpg")
+
 #x.show()
 print(x)
 classifier  = pipeline("zero-shot-image-classification")
 
-fish = ["Red Snapper", "Mackerel", "Thunnus",
+fish = ["Red Snapper", "Mackerel", "Tuna",
 "Mahi-Mahi", "Parrotfish", "Barracuda",
 "Crevalle jack"]
 
@@ -15,7 +16,7 @@ prices = {
     "Barracuda": 400,
     "Parrotfish": 1150,
     "Mahi-Mahi": 3570,
-    "Thunnus": 200,
+    "Tuna": 200,
     "Crevalle jack": 554,
     "Mackerel":  650
 }
@@ -42,7 +43,7 @@ length = {
         "Parrotfish": str("4.3 - 4.9"),
         "Mahi-Mahi": str("3 - 7"),
         "Crevalle jack": str("2 - 6.3"), 
-        "Thunnus": str("1.6 - 15"),
+        "Tuna": str("1.6 - 15"),
         "Mackerel": str("1 - 6"),
 }
 
@@ -56,7 +57,7 @@ Diet = {
         "Parrotfish": str("are primarily herbivores that eat algae, coral polyps, and small bits of rock or detritus"),
         "Mahi-Mahi": str("are fast-swimming carnivorous apex predators that feed on small pelagic fish, squid, and crustaceans"),
         "Crevalle jack": str("is a carnivorous predator whose diet consists mainly of smaller schooling fish, shrimp, crabs, and squid"), 
-        "Thunnus": str("Thunnus are active, meat-eating predators that feed on smaller fish, squid, and crustaceans"),
+        "Tuna": str("Tuna are active, meat-eating predators that feed on smaller fish, squid, and crustaceans"),
         "Mackerel": str("Mackerel fish eats Small Crustaceans: Feed heavily on tiny swimming animals like copepods, krill, and small shrimp."),
 }
 
@@ -78,7 +79,7 @@ print()
 #parrotfish are primarily herbivores that eat algae, coral polyps, and small bits of rock or detritus
 #Mahi-mahi are fast-swimming carnivorous apex predators that feed on small pelagic fish, squid, and crustaceans
 #Crevalle jack is a carnivorous predator whose diet consists mainly of smaller schooling fish, shrimp, crabs, and squid
-#Thunnus are active, meat-eating predators that feed on smaller fish, squid, and crustaceans
+#Tuna are active, meat-eating predators that feed on smaller fish, squid, and crustaceans
 #Mackerel fish eats Small Crustaceans: Feed heavily on tiny swimming animals like copepods, krill, and small shrimp.
 
 
@@ -90,6 +91,6 @@ print()
 
 #JMD $900 to JMD $1,400 per pound parrotfish
 
-#JMD 145.19 and JMD 257.13 per pound(lb) Thunnus
+#JMD 145.19 and JMD 257.13 per pound(lb) Tuna
 #$390 – $945 per lb
 #JMD $390 and JMD $944 Crevalle jack
