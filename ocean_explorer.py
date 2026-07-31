@@ -6,7 +6,7 @@ from transformers import pipeline
 
 #OPEN AI load
 #patch14 is more memory, better model 
-classifier  = pipeline("zero-shot-image-classification", model="openai/clip-vit-large-patch32")
+#classifier  = pipeline("zero-shot-image-classification", model="openai/clip-vit-large-patch32")
 
 from flask import Flask, render_template, request
 app = Flask(__name__)
