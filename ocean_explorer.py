@@ -5,14 +5,15 @@ from transformers import pipeline
 #import torch
 
 #OPEN AI load
-#patch14 is more memory, better model 
+#patch14 is more memory, better model
+#Render does not allow us to access openai model 
 #classifier  = pipeline("zero-shot-image-classification", model="openai/clip-vit-large-patch32")
 
 from flask import Flask, render_template, request
 app = Flask(__name__)
 @app.route("/")
 def home():
-    return "WEBSITE IS WORKIG!"
+    return "WEBSITE IS WORKIG!" #TESTER
     #return render_template("index.html")
 
 @app.route("/upload",methods = ["POST"])
