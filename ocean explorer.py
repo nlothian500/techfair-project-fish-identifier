@@ -1,7 +1,7 @@
 from PIL import Image
 from transformers import pipeline
 
-x = Image.open("Thunnus.jpg").convert("RGB")
+x = Image.open("parrotfish-3.jpg").convert("RGB")
 
 #x.show()
 print(x)
@@ -43,7 +43,7 @@ length = {
         "Parrotfish": str("4.3 - 4.9"),
         "Mahi-Mahi": str("3 - 7"),
         "Crevalle Jack": str("2 - 6.3"), 
-        "Tuna": str("1.6 - 15"),
+        "Tuna": str("3.6 - 15"),
         "Mackerel": str("1 - 6"),
 }
 
