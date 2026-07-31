@@ -1,5 +1,49 @@
+from flask import flask
+app = flask(__name__)
+@app.route("/")
+def home():
+    return"<h1>Hello,Render!<h1>"
+if __name__=="__main__":
+    app.run()
+import cv2
 from PIL import Image
 from transformers import pipeline
+#open camera
+cam = cv2.VideoCapture(0)
+
+#get default width and height
+frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
+frame_height = int(cam.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+#create VideoWriter object
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (frame_width, frame_height))
+
+while True:
+    ret, frame = cam.read()
+
+    #write frame to output file
+    out.write(frame)
+
+    #display the frame
+    cv2.imshow('Camera', frame)
+    key = cv2.waitKey(1)
+     
+
+
+    if key == ord(" "):
+        print("photo taken")
+        cv2.imwrite("captured_image.jpg", frame)
+        break
+
+    #q' to exit the loop
+    elif cv2.waitKey(1) == ord('q'):
+        break
+
+#Release the capture objects
+cam.release()
+out.release()
+cv2.destroyAllWindows()
 
 x = Image.open("parrotfish-3.jpg").convert("RGB")
 
