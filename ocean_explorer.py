@@ -5,7 +5,8 @@ from transformers import pipeline
 #import torch
 
 #OPEN AI load
-classifier  = pipeline("zero-shot-image-classification", model="openai/clip-vit-large-patch14")
+#patch14 is more memory, better model 
+classifier  = pipeline("zero-shot-image-classification", model="openai/clip-vit-large-patch32")
 
 from flask import Flask, render_template, request
 app = Flask(__name__)
@@ -84,6 +85,7 @@ def upload():
     print(Diet[lab])
     print()
 
+#MAY NEED TO ADD TO / CHANGE LATER 
     return f"""
     Fish: {lab}<br>
 """
