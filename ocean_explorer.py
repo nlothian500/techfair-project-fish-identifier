@@ -1,13 +1,95 @@
+import cv2
+from PIL import Image
+from transformers import pipeline
+import requests
+import torch
+
 from flask import Flask
 app = Flask(__name__)
 @app.route("/")
 def home():
     return"<h1>Hello,Render!<h1>"
+
+@app.route("/upload",methods = ["POST"])
+def upload():
+    file = request.files["image"]
+
+    image = Image.open(file).convert("RGB")
+
+    x = Image.open("captured_image.jpg").convert("RGB")
+
+    #x.show()
+    print(x)
+    classifier  = pipeline("zero-shot-image-classification", model="openai/clip-vit-large-patch14")
+
+    fish = ["Red Snapper", "Mackerel", "Tuna",
+    "Mahi-Mahi", "Parrotfish", "Barracuda",
+    "Crevalle Jack"]
+
+    prices = {
+        "Red Snapper": 2100,
+        "Barracuda": 400,
+        "Parrotfish": 1150,
+        "Mahi-Mahi": 3570,
+        "Tuna": 200,
+        "Crevalle Jack": 554,
+        "Mackerel":  650
+    }
+
+    inputs = classifier(x, candidate_labels=fish, hypothesis_template="a clear photo of a {} fish")
+    print("Fish Name:")
+    print(inputs[0]["label"])
+    lab = inputs[0]["label"]
+    print()
+    score = inputs[0]["score"]*100
+    print("Confidence:")
+    o = (round(score,0))
+    print(str(o)+"%")
+    print()
+
+    print("Estimated Market Value:")
+    print(str(prices[lab])+ "JMD/lb")
+    print()
+
+
+    length = {
+            "Barracuda": str("5 - 6.5"), 
+            "Red Snapper": str("1.5 - 2.5"),
+            "Parrotfish": str("4.3 - 4.9"),
+            "Mahi-Mahi": str("3 - 7"),
+            "Crevalle Jack": str("2 - 6.3"), 
+            "Tuna": str("3.6 - 15"),
+            "Mackerel": str("1 - 6"),
+    }
+
+    print("Maximum Length:")
+    print(str(length[lab])+ " feet")
+    print()
+
+    Diet = {
+            "Barracuda": str("is a carnivorous fish that eats smaller fish, squids, and crustaceans"), 
+            "Red Snapper": str("is a carnivorous that eats various small fish living near the sea bottom Crabs, mantis shrimp (stomatopods), and regular shrimp."),
+            "Parrotfish": str("are primarily herbivores that eat algae, coral polyps, and small bits of rock or detritus"),
+            "Mahi-Mahi": str("are fast-swimming carnivorous apex predators that feed on small pelagic fish, squid, and crustaceans"),
+            "Crevalle Jack": str("is a carnivorous predator whose diet consists mainly of smaller schooling fish, shrimp, crabs, and squid"), 
+            "Tuna": str("Tuna are active, meat-eating predators that feed on smaller fish, squid, and crustaceans"),
+            "Mackerel": str("Mackerel fish eats Small Crustaceans: Feed heavily on tiny swimming animals like copepods, krill, and small shrimp."),
+    }
+
+
+    print("Fish diet and what bait to use to catch the Fish:")
+    print(Diet[lab])
+    print()
+
+
+
+
 if __name__=="__main__":
     app.run()
-import cv2
-from PIL import Image
-from transformers import pipeline
+
+
+
+"""
 #open camera
 cam = cv2.VideoCapture(0)
 
@@ -45,70 +127,8 @@ cam.release()
 out.release()
 cv2.destroyAllWindows()
 
-x = Image.open("captured_image.jpg").convert("RGB")
+"""
 
-#x.show()
-print(x)
-classifier  = pipeline("zero-shot-image-classification", model="openai/clip-vit-large-patch14")
-
-fish = ["Red Snapper", "Mackerel", "Tuna",
-"Mahi-Mahi", "Parrotfish", "Barracuda",
-"Crevalle Jack"]
-
-prices = {
-    "Red Snapper": 2100,
-    "Barracuda": 400,
-    "Parrotfish": 1150,
-    "Mahi-Mahi": 3570,
-    "Tuna": 200,
-    "Crevalle Jack": 554,
-    "Mackerel":  650
-}
-
-inputs = classifier(x, candidate_labels=fish, hypothesis_template="a clear photo of a {} fish")
-print("Fish Name:")
-print(inputs[0]["label"])
-lab = inputs[0]["label"]
-print()
-score = inputs[0]["score"]*100
-print("Confidence:")
-o = (round(score,0))
-print(str(o)+"%")
-print()
-
-print("Estimated Market Value:")
-print(str(prices[lab])+ "JMD/lb")
-print()
-
-
-length = {
-        "Barracuda": str("5 - 6.5"), 
-        "Red Snapper": str("1.5 - 2.5"),
-        "Parrotfish": str("4.3 - 4.9"),
-        "Mahi-Mahi": str("3 - 7"),
-        "Crevalle Jack": str("2 - 6.3"), 
-        "Tuna": str("3.6 - 15"),
-        "Mackerel": str("1 - 6"),
-}
-
-print("Maximum Length:")
-print(str(length[lab])+ " feet")
-print()
-
-Diet = {
-        "Barracuda": str("is a carnivorous fish that eats smaller fish, squids, and crustaceans"), 
-        "Red Snapper": str("is a carnivorous that eats various small fish living near the sea bottom Crabs, mantis shrimp (stomatopods), and regular shrimp."),
-        "Parrotfish": str("are primarily herbivores that eat algae, coral polyps, and small bits of rock or detritus"),
-        "Mahi-Mahi": str("are fast-swimming carnivorous apex predators that feed on small pelagic fish, squid, and crustaceans"),
-        "Crevalle Jack": str("is a carnivorous predator whose diet consists mainly of smaller schooling fish, shrimp, crabs, and squid"), 
-        "Tuna": str("Tuna are active, meat-eating predators that feed on smaller fish, squid, and crustaceans"),
-        "Mackerel": str("Mackerel fish eats Small Crustaceans: Feed heavily on tiny swimming animals like copepods, krill, and small shrimp."),
-}
-
-
-print("Fish diet and what bait to use to catch the Fish:")
-print(Diet[lab])
-print()
 
 
 
