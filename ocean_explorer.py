@@ -7,11 +7,11 @@ from transformers import pipeline
 #OPEN AI load
 classifier  = pipeline("zero-shot-image-classification", model="openai/clip-vit-large-patch14")
 
-from flask import Flask, request
+from flask import Flask, render_template, request
 app = Flask(__name__)
 @app.route("/")
 def home():
-    return"<h1>Hello,Render!<h1>"
+    return render_template("index.html")
 
 @app.route("/upload",methods = ["POST"])
 def upload():
