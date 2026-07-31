@@ -1,5 +1,5 @@
-from flask import flask
-app = flask(__name__)
+from flask import Flask
+app = Flask(__name__)
 @app.route("/")
 def home():
     return"<h1>Hello,Render!<h1>"
@@ -45,7 +45,7 @@ cam.release()
 out.release()
 cv2.destroyAllWindows()
 
-x = Image.open("parrotfish-3.jpg").convert("RGB")
+x = Image.open("captured_image.jpg").convert("RGB")
 
 #x.show()
 print(x)
