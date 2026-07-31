@@ -1,10 +1,13 @@
-import cv2
+#import cv2
 from PIL import Image
 from transformers import pipeline
-import requests
-import torch
+#import requests
+#import torch
 
-from flask import Flask
+#OPEN AI load
+classifier  = pipeline("zero-shot-image-classification", model="openai/clip-vit-large-patch14")
+
+from flask import Flask, request
 app = Flask(__name__)
 @app.route("/")
 def home():
@@ -14,13 +17,13 @@ def home():
 def upload():
     file = request.files["image"]
 
-    image = Image.open(file).convert("RGB")
+    image1 = Image.open(file).convert("RGB")
 
-    x = Image.open("captured_image.jpg").convert("RGB")
+    x = image1.convert("RGB")
 
     #x.show()
     print(x)
-    classifier  = pipeline("zero-shot-image-classification", model="openai/clip-vit-large-patch14")
+    
 
     fish = ["Red Snapper", "Mackerel", "Tuna",
     "Mahi-Mahi", "Parrotfish", "Barracuda",
@@ -81,6 +84,9 @@ def upload():
     print(Diet[lab])
     print()
 
+    return f"""
+    Fish: {lab}<br>
+"""
 
 
 
