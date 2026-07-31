@@ -12,7 +12,8 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return "WEBSITE IS WORKIG!"
+    #return render_template("index.html")
 
 @app.route("/upload",methods = ["POST"])
 def upload():
